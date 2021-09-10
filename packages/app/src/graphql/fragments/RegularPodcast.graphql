@@ -1,0 +1,15 @@
+fragment RegularPodcast on Podcast {
+    id
+    fileUrl
+    creatorId
+    comments {
+        ...RegularComment
+    }
+    likes
+    creator {
+        ...RegularUser
+    }
+    title
+    createdAt
+    updatedAt
+}

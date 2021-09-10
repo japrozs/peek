@@ -1,0 +1,11 @@
+fragment RegularComment on Comment {
+    id
+    creatorId
+    body
+    creator {
+        ...RegularUser
+    }
+    podcastId
+    createdAt
+    updatedAt
+}

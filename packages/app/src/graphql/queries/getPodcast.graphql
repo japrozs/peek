@@ -1,0 +1,5 @@
+query getPodcast($id: Int!) {
+    getPodcast(id: $id) {
+        ...RegularPodcast
+    }
+}
