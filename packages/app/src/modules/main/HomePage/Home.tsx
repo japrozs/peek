@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Modal, Pressable } from "react-native";
 import { colors, constants, fonts } from "../../../theme";
 import Constants from "expo-constants";
 import { useGetAllPodcastsQuery } from "../../../generated/graphql";

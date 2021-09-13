@@ -16,7 +16,6 @@ import { Podcast } from "./entities/Podcast";
 import { PodcastResolver } from "./resolvers/podcast";
 import { Comment } from "./entities/Comment";
 
-// rerun
 const main = async () => {
     const conn = await createConnection({
         type: "postgres",
@@ -25,7 +24,7 @@ const main = async () => {
         password: "postgres",
         logging: true,
         migrations: [path.join(__dirname, "./migrations/*")],
-        synchronize: true, // set to false, when wiping the data (i.e. await Post.delete({}); )
+        synchronize: true, // set to false, when wiping the data (i.e. await Podcast.delete({}); )
         entities: [User, Podcast, Comment],
     });
     conn.runMigrations();
@@ -36,7 +35,7 @@ const main = async () => {
 
     app.use(
         cors({
-            origin: "http://localhost:19006",
+            origin: "http://localhost:19006", // not needed, but added for good measure
             credentials: true,
         })
     );

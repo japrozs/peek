@@ -23,8 +23,19 @@ export const colors = {
     },
 };
 
+const iconSize = 25;
+
 export const layout = {
-    iconSize: 25,
+    borderRadius: 50,
+    iconSize,
+    images: {
+        profileImgHeight: 100,
+        profileImgWidth: 100,
+        smallProfileImgHeight: iconSize,
+        smallProfileImgWidth: iconSize,
+        postProfileImgHeight: 33,
+        postProfileImgWidth: 33,
+    },
 };
 
 export const constants = {

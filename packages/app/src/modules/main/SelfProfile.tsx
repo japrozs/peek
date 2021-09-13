@@ -1,12 +1,16 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from "react";
+import { View, Text } from "react-native";
+import { ProfileImage } from "../../components/ProfileImage";
+import { useMeQuery } from "../../generated/graphql";
 
-interface SelfProfileProps{}
+interface SelfProfileProps {}
 
-export const SelfProfile : React.FC<SelfProfileProps> = ({}) => {
-	return (
-		<View>
-			<Text>this is a really nice app</Text>
-		</View>
-	)
-}
+export const SelfProfile: React.FC<SelfProfileProps> = ({}) => {
+    const { data, loading } = useMeQuery();
+    return (
+        <View>
+            {/* <ProfileImage imgUrl={data?.me?.imgUrl} variant={"regular"} /> */}
+            <Text style={{ color: "#fff" }}>this is a really nice app</Text>
+        </View>
+    );
+};

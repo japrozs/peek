@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { View, Text } from "react-native";
 import Routes from "./routes";
@@ -18,7 +18,7 @@ import {
 interface indexProps {}
 
 const client = new ApolloClient({
-    uri: "http://192.168.1.5:4000/graphql",
+    uri: "http://localhost:4000/graphql",
     credentials: "include",
     cache: new InMemoryCache(),
 });
@@ -36,13 +36,13 @@ export default function Index() {
         "Inter 900": Inter_900Black,
     });
 
-    if (!fontsLoaded) {
-        return (
-            <View>
-                <Text>loading fonts...</Text>
-            </View>
-        );
-    }
+    // if (!fontsLoaded) {
+    //     return (
+    //         <View>
+    //             <Text>loading fonts...</Text>
+    //         </View>
+    //     );
+    // }
     return (
         <ApolloProvider client={client}>
             <Routes />
