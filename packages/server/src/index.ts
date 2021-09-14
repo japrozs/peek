@@ -39,6 +39,7 @@ const main = async () => {
             credentials: true,
         })
     );
+    app.use("/podcasts", express.static(path.join(__dirname, "../podcasts/")));
     app.use(
         session({
             name: COOKIE_NAME,
