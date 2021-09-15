@@ -79,4 +79,9 @@ export const globalStyles = StyleSheet.create({
         color: "#fff",
         fontFamily: "Inter 600",
     },
+    headingCaps: {
+        fontSize: 16,
+        fontFamily: fonts.inter_600,
+        color: colors.dogeTextGray,
+    },
 });
