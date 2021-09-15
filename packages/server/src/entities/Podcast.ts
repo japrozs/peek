@@ -43,6 +43,13 @@ export class Podcast extends BaseEntity {
     @Column()
     title: string;
 
+    @Field()
+    @Column({
+        default:
+            "https://images.unsplash.com/photo-1484291470158-b8f8d608850d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop",
+    })
+    coverUrl: string;
+
     @Field(() => String)
     @CreateDateColumn()
     createdAt: Date;

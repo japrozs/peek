@@ -66,6 +66,7 @@ export type MutationRegisterArgs = {
 export type Podcast = {
   __typename?: 'Podcast';
   comments: Array<Comment>;
+  coverUrl: Scalars['String'];
   createdAt: Scalars['String'];
   creator: User;
   creatorId: Scalars['Float'];
@@ -118,7 +119,7 @@ export type RegularCommentFragment = { __typename?: 'Comment', id: number, creat
 
 export type RegularErrorFragment = { __typename?: 'FieldError', field: string, message: string };
 
-export type RegularPodcastFragment = { __typename?: 'Podcast', id: number, fileUrl: string, creatorId: number, likes: number, title: string, createdAt: string, updatedAt: string, comments: Array<{ __typename?: 'Comment', id: number, creatorId: number, body: string, podcastId: number, createdAt: string, updatedAt: string, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }>, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } };
+export type RegularPodcastFragment = { __typename?: 'Podcast', id: number, fileUrl: string, creatorId: number, likes: number, coverUrl: string, title: string, createdAt: string, updatedAt: string, comments: Array<{ __typename?: 'Comment', id: number, creatorId: number, body: string, podcastId: number, createdAt: string, updatedAt: string, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }>, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } };
 
 export type RegularUserFragment = { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string };
 
@@ -147,14 +148,14 @@ export type RegisterMutation = { __typename?: 'Mutation', register: { __typename
 export type GetAllPodcastsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllPodcastsQuery = { __typename?: 'Query', getAllPodcasts: Array<{ __typename?: 'Podcast', id: number, fileUrl: string, creatorId: number, likes: number, title: string, createdAt: string, updatedAt: string, comments: Array<{ __typename?: 'Comment', id: number, creatorId: number, body: string, podcastId: number, createdAt: string, updatedAt: string, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }>, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }> };
+export type GetAllPodcastsQuery = { __typename?: 'Query', getAllPodcasts: Array<{ __typename?: 'Podcast', id: number, fileUrl: string, creatorId: number, likes: number, coverUrl: string, title: string, createdAt: string, updatedAt: string, comments: Array<{ __typename?: 'Comment', id: number, creatorId: number, body: string, podcastId: number, createdAt: string, updatedAt: string, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }>, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }> };
 
 export type GetPodcastQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetPodcastQuery = { __typename?: 'Query', getPodcast: { __typename?: 'Podcast', id: number, fileUrl: string, creatorId: number, likes: number, title: string, createdAt: string, updatedAt: string, comments: Array<{ __typename?: 'Comment', id: number, creatorId: number, body: string, podcastId: number, createdAt: string, updatedAt: string, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }>, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } } };
+export type GetPodcastQuery = { __typename?: 'Query', getPodcast: { __typename?: 'Podcast', id: number, fileUrl: string, creatorId: number, likes: number, coverUrl: string, title: string, createdAt: string, updatedAt: string, comments: Array<{ __typename?: 'Comment', id: number, creatorId: number, body: string, podcastId: number, createdAt: string, updatedAt: string, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } }>, creator: { __typename: 'User', id: number, username: string, email: string, name: string, imgUrl: string, createdAt: string, updatedAt: string } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -198,6 +199,7 @@ export const RegularPodcastFragmentDoc = gql`
   creator {
     ...RegularUser
   }
+  coverUrl
   title
   createdAt
   updatedAt

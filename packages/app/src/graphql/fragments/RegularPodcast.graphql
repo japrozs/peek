@@ -9,6 +9,7 @@ fragment RegularPodcast on Podcast {
     creator {
         ...RegularUser
     }
+    coverUrl
     title
     createdAt
     updatedAt
