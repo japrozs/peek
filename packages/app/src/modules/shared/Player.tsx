@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
-import { colors, fonts, globalStyles, layout, constants } from "../../theme";
+import {
+    Text,
+    View,
+    StyleSheet,
+    Image,
+    Dimensions,
+    ScrollView,
+} from "react-native";
+import {
+    colors,
+    fonts,
+    globalStyles,
+    layout,
+    constants,
+    controlIconSize,
+} from "../../theme";
 import ExpoConstants from "expo-constants";
 import { AntDesign } from "@expo/vector-icons";
 import { ProfileImage } from "../../components/ProfileImage";
@@ -9,6 +23,7 @@ import { PodcastAudioType, stateWithPodcast } from "../../types";
 import { Podcast } from "../../generated/graphql";
 import { Audio, AVPlaybackStatus } from "expo-av";
 import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
 interface PlayerProps {
     setModalVisible: (value: React.SetStateAction<boolean>) => void;
@@ -33,18 +48,31 @@ export const Player: React.FC<PlayerProps> = ({
         (state) => (state as stateWithPodcast).podcast
     );
 
-    const [positionMillis, setPositionMillis] = useState(0);
+    const [scrollEnabled, setScrollEnabled] = useState(false);
+    const [values, setValues] = useState([0]);
+
+    const onUpdate = (playBack: AVPlaybackStatus) => {
+        setValues([
+            (playBack as object & { positionMillis: number }).positionMillis,
+        ]);
+    };
 
     useEffect(() => {
-        if (audio === null) {
-            setAudio(new Audio.Sound());
-        }
+        (async () => {
+            if (audio === null) {
+                const audioObj = new Audio.Sound();
+                setAudio(audioObj);
+            }
+        })();
     }, []);
 
     const handlePausePlayAudio = async () => {
         if (audio !== null && status === null) {
+            audio.setOnPlaybackStatusUpdate(onUpdate);
             const status = await audio.loadAsync(
-                { uri: podcast.fileUrl },
+                {
+                    uri: "http://192.168.1.5:4000/podcasts/56be463e-f742-46de-a9b2-2fa72462df70.mp3",
+                },
                 { shouldPlay: true }
             );
             setIsPlaying(true);
@@ -104,6 +132,22 @@ export const Player: React.FC<PlayerProps> = ({
         console.log("duration : ", status.durationMillis);
     };
 
+    const enableScroll = () => {
+        setScrollEnabled(true);
+    };
+
+    const disableScroll = () => {
+        setScrollEnabled(false);
+    };
+
+    const skipTo = (val: number) => {
+        console.log("position : ", val);
+        audio?.setPositionAsync(val);
+        console.log("current positon", status.positionMillis);
+        status.positionMillis = val;
+        console.log("duration : ", status.durationMillis);
+    };
+
     return (
         <View style={styles.container}>
             <AntDesign
@@ -132,11 +176,25 @@ export const Player: React.FC<PlayerProps> = ({
                             : podcast.coverUrl,
                 }}
             />
+            <ScrollView style={styles.slider} scrollEnabled={scrollEnabled}>
+                <MultiSlider
+                    onValuesChangeFinish={(val) => {
+                        setValues([val[0]]);
+                        skipTo(val[0]);
+                    }}
+                    step={1}
+                    min={0}
+                    max={status === null ? 5 : status.durationMillis}
+                    values={values}
+                    sliderLength={Dimensions.get("screen").width - 40}
+                    onValuesChangeStart={disableScroll}
+                />
+            </ScrollView>
             <View style={[globalStyles.flex, styles.controls]}>
                 <MaterialCommunityIcons
                     name="rewind-10"
                     onPress={skipBackSeconds}
-                    size={layout.iconSize + 30}
+                    size={controlIconSize}
                     style={styles.icon}
                     color={colors.wheat}
                 />
@@ -144,7 +202,7 @@ export const Player: React.FC<PlayerProps> = ({
                     <MaterialCommunityIcons
                         name={"pause"}
                         onPress={handlePausePlayAudio}
-                        size={layout.iconSize + 30}
+                        size={controlIconSize}
                         style={styles.icon}
                         color={colors.wheat}
                     />
@@ -153,14 +211,14 @@ export const Player: React.FC<PlayerProps> = ({
                         style={styles.icon}
                         onPress={handlePausePlayAudio}
                         name="controller-play"
-                        size={layout.iconSize + 30}
+                        size={controlIconSize}
                         color={colors.wheat}
                     />
                 )}
                 <MaterialCommunityIcons
                     name="fast-forward-10"
                     onPress={skipNextSeconds}
-                    size={layout.iconSize + 30}
+                    size={controlIconSize}
                     style={styles.icon}
                     color={colors.wheat}
                 />
@@ -212,9 +270,13 @@ const styles = StyleSheet.create({
     },
     controls: {
         justifyContent: "space-evenly",
-        marginTop: 60,
     },
     icon: {
         alignSelf: "center",
+    },
+    slider: {
+        padding: 0,
+        maxHeight: 50,
+        marginVertical: 30,
     },
 });

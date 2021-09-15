@@ -24,6 +24,8 @@ export const colors = {
 };
 
 const iconSize = 25;
+export const controlIconSize = iconSize + 20;
+export const controlIconSizeSmall = iconSize + 10;
 
 export const layout = {
     borderRadius: 50,

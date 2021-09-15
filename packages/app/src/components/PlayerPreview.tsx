@@ -3,7 +3,15 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Podcast } from "../generated/graphql";
 import { useStore } from "../store/useStore";
-import { colors, constants, fonts, globalStyles, layout } from "../theme";
+import {
+    colors,
+    constants,
+    controlIconSize,
+    controlIconSizeSmall,
+    fonts,
+    globalStyles,
+    layout,
+} from "../theme";
 import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import { stateWithPodcast } from "../types";
 import { Audio } from "expo-av";
@@ -31,13 +39,18 @@ export const PlayerPreview: React.FC<PlayerPreviewProps> = ({
     useEffect(() => {
         if (audio === null) {
             setAudio(new Audio.Sound());
+            Audio.setAudioModeAsync({
+                staysActiveInBackground: true,
+            });
         }
     }, []);
 
     const handlePausePlayAudio = async () => {
         if (audio !== null && status === null) {
             const status = await audio.loadAsync(
-                { uri: podcast.fileUrl },
+                {
+                    uri: "http://192.168.1.5:4000/podcasts/56be463e-f742-46de-a9b2-2fa72462df70.mp3",
+                },
                 { shouldPlay: true }
             );
             setIsPlaying(true);
@@ -80,7 +93,7 @@ export const PlayerPreview: React.FC<PlayerPreviewProps> = ({
                     <MaterialCommunityIcons
                         name={"pause"}
                         onPress={handlePausePlayAudio}
-                        size={layout.iconSize + 17}
+                        size={controlIconSizeSmall}
                         style={styles.icon}
                         color={colors.wheat}
                     />
@@ -89,7 +102,7 @@ export const PlayerPreview: React.FC<PlayerPreviewProps> = ({
                         style={styles.icon}
                         onPress={handlePausePlayAudio}
                         name="controller-play"
-                        size={layout.iconSize + 17}
+                        size={controlIconSizeSmall}
                         color={colors.wheat}
                     />
                 )}
