@@ -49,7 +49,7 @@ export const PlayerPreview: React.FC<PlayerPreviewProps> = ({
         if (audio !== null && status === null) {
             const status = await audio.loadAsync(
                 {
-                    uri: "http://192.168.1.5:4000/podcasts/56be463e-f742-46de-a9b2-2fa72462df70.mp3",
+                    uri: "http://192.168.1.5:4000/podcasts/f7513b0c-1331-4468-8845-0218be8780c2.mp3",
                 },
                 { shouldPlay: true }
             );

@@ -71,7 +71,7 @@ export const Player: React.FC<PlayerProps> = ({
             audio.setOnPlaybackStatusUpdate(onUpdate);
             const status = await audio.loadAsync(
                 {
-                    uri: "http://192.168.1.5:4000/podcasts/56be463e-f742-46de-a9b2-2fa72462df70.mp3",
+                    uri: "http://192.168.1.5:4000/podcasts/f7513b0c-1331-4468-8845-0218be8780c2.mp3",
                 },
                 { shouldPlay: true }
             );
